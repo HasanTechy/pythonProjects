@@ -1,3 +1,6 @@
+import math
+
+
 def calculate_score():
     while True:
         try:
@@ -37,7 +40,7 @@ def needed_score_for_final():
                 if midterms >= 61.0:
                     print("You've already passed the exam")
                 else:
-                    print("you need to score ", 61 - midterms, "points in final to pass the exam")
+                    print("you need to score ", math.ceil((61 - midterms) * 2.5), "points in final to pass the exam")
                 break
             else:
                 print("Invalid score! Scores must be in the range of 0 to 100.")
