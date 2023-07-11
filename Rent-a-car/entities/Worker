@@ -25,6 +25,7 @@ class Worker(Customer):
 
 
 workers = {}
+existing_fins = set()
 
 
 class IDGenerator:
@@ -36,17 +37,42 @@ class IDGenerator:
         self.counter += 1
         return id_value
 
+
 def generate_unique_id(id_generator = IDGenerator()):
     return id_generator.generate_id()
+
+
+def input_numeric(prompt):
+    while True:
+        value = input(prompt)
+        if value.isdigit():
+            return int(value)
+        else:
+            print("Invalid input. Please enter a numeric value.")
+
+
+def input_fin(prompt):
+    while True:
+        value = input(prompt)
+        if value.isdigit() and len(value) == 7:
+            return value
+        else:
+            print("Invalid input. Please enter a 7-digit numeric value.")
 
 
 def add_worker():
     name = input("Enter the worker's name: ")
     surname = input("Enter the worker's surname: ")
     father_name = input("Enter the worker's father name: ")
-    fin = input("Enter the worker's FIN: ")
-    age = input("Enter the worker's age: ")
+    fin = input_fin("Enter the worker's FIN: ")
+    age = input_numeric("Enter the worker's age: ")
     position = input("Enter the worker's position: ")
+
+    if fin in existing_fins:
+        print("FIN already exists. Please enter a unique FIN.")
+        return
+
+    existing_fins.add(fin)
 
     worker = Worker(name, surname, father_name, fin, age, position)
     worker_id = generate_unique_id()
@@ -72,7 +98,7 @@ def get_all_workers():
 
 
 def update_worker():
-    worker_id = input("Enter the worker ID to update: ")
+    worker_id = int(input("Enter the worker ID to update: "))
 
     if worker_id in workers:
         worker = workers[worker_id]
@@ -97,7 +123,7 @@ def update_worker():
 
 
 def delete_worker():
-    worker_id = input("Enter the worker ID to delete: ")
+    worker_id = int(input("Enter the worker ID to delete: "))
 
     if worker_id in workers:
         del workers[worker_id]

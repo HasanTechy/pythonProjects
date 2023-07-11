@@ -49,6 +49,7 @@ class Customer:
 
 
 customers = {}
+existing_fins = set()
 
 
 class IDGenerator:
@@ -60,16 +61,41 @@ class IDGenerator:
         self.counter += 1
         return id_value
 
+
 def generate_unique_id(id_generator = IDGenerator()):
     return id_generator.generate_id()
+
+
+def input_numeric(prompt):
+    while True:
+        value = input(prompt)
+        if value.isdigit():
+            return int(value)
+        else:
+            print("Invalid input. Please enter a numeric value.")
+
+
+def input_fin(prompt):
+    while True:
+        value = input(prompt)
+        if value.isdigit() and len(value) == 7:
+            return value
+        else:
+            print("Invalid input. Please enter a 7-digit numeric value.")
 
 
 def add_customer():
     name = input("Enter the customer's name: ")
     surname = input("Enter the customer's surname: ")
     father_name = input("Enter the customer's father name: ")
-    fin = input("Enter the customer's FIN: ")
-    age = input("Enter the customer's age: ")
+    fin = input_fin("Enter the customer's FIN: ")
+    age = input_numeric("Enter the customer's age: ")
+
+    if fin in existing_fins:
+        print("FIN already exists. Please enter a unique FIN.")
+        return
+
+    existing_fins.add(fin)
 
     customer = Customer(name, surname, father_name, fin, age)
     customer_id = generate_unique_id()
@@ -94,7 +120,7 @@ def get_all_customers():
 
 
 def update_customer():
-    customer_id = input("Enter the customer ID to update: ")
+    customer_id = int(input("Enter the customer ID to update: "))
 
     if customer_id in customers:
         customer = customers[customer_id]
@@ -102,8 +128,8 @@ def update_customer():
         name = input("Enter the updated name: ")
         surname = input("Enter the updated surname: ")
         father_name = input("Enter the updated father name: ")
-        fin = input("Enter the updated FIN: ")
-        age = input("Enter the updated age: ")
+        fin = input_numeric("Enter the updated FIN: ")
+        age = input_numeric("Enter the updated age: ")
 
         customer.set_name(name)
         customer.set_surname(surname)
@@ -115,8 +141,9 @@ def update_customer():
     else:
         print("Customer not found.")
 
+
 def delete_customer():
-    customer_id = input("Enter the customer ID to delete: ")
+    customer_id = int(input("Enter the customer ID to delete: "))
 
     if customer_id in customers:
         del customers[customer_id]
