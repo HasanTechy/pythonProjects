@@ -109,7 +109,7 @@ def update_car():
 
         print("Car updated successfully.")
     else:
-        print("Car not found.")
+        print("Car not found")
 
 
 def delete_car():

@@ -7,7 +7,7 @@ def main():
     logged_in = login()
 
     if not logged_in:
-        print("Login failed. Exiting the program.")
+        print("Login failed. Exiting the program")
         return
 
     while True:

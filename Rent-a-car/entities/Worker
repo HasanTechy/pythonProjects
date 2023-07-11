@@ -78,7 +78,7 @@ def add_worker():
     worker_id = generate_unique_id()
     workers[worker_id] = worker
 
-    print("Worker added successfully.")
+    print("Worker added successfully")
 
 
 def get_all_workers():

@@ -139,7 +139,7 @@ def update_customer():
 
         print("Customer updated successfully.")
     else:
-        print("Customer not found.")
+        print("Customer not found")
 
 
 def delete_customer():
